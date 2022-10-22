@@ -15,6 +15,9 @@ public class SkyscraperConfig implements Configuration {
     /** empty cell value display */
     public final static char EMPTY_CELL = '.';
 
+    private static int DIM;
+    private static int[] lookNS;
+    private int[][]grid;
     /**
      * Constructor
      *
@@ -36,6 +39,20 @@ public class SkyscraperConfig implements Configuration {
         Scanner f = new Scanner(new File(filename));
 
         // TO DO
+        DIM = f.nextInt();
+        lookNS = new int[DIM];
+        for(int i = 0; i < DIM; i++){
+            lookNS[i] = f.nextInt();
+        }
+        // do for other 3 look arrays
+
+        // initialize grid
+        this.grid = new int[DIM][DIM];
+        for(int r = 0; r < DIM; r++){
+            for(int c = 0; c < DIM; c++){
+                this.grid[r][c] = f.nextInt();
+            }
+        }
 
         // close the input file
         f.close();
