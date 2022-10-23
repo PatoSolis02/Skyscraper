@@ -17,6 +17,9 @@ public class SkyscraperConfig implements Configuration {
 
     private static int DIM;
     private static int[] lookNS;
+    private static int[] lookEW;
+    private static int[] lookSN;
+    private static int[] lookWE;
     private int[][]grid;
     /**
      * Constructor
@@ -45,6 +48,20 @@ public class SkyscraperConfig implements Configuration {
             lookNS[i] = f.nextInt();
         }
         // do for other 3 look arrays
+        lookEW = new int[DIM];
+        for(int i = 0; i < DIM; i++){
+            lookEW[i] = f.nextInt();
+        }
+
+        lookSN = new int[DIM];
+        for(int i = 0; i < DIM; i++){
+            lookSN[i] = f.nextInt();
+        }
+
+        lookWE = new int[DIM];
+        for(int i = 0; i < DIM; i++){
+            lookWE[i] = f.nextInt();
+        }
 
         // initialize grid
         this.grid = new int[DIM][DIM];
@@ -122,6 +139,36 @@ public class SkyscraperConfig implements Configuration {
     public String toString() {
 
         // TODO
+        System.out.print("N: [");
+        for(int i = 0; i < DIM -1; i++){
+            System.out.print(lookNS[i] + ", ");
+        }
+        System.out.println(lookNS[DIM - 1] +"]");
+
+        System.out.print("E: [");
+        for(int i = 0; i < DIM -1; i++){
+            System.out.print(lookEW[i] + ", ");
+        }
+        System.out.println(lookEW[DIM - 1] +"]");
+
+        System.out.print("S: [");
+        for(int i = 0; i < DIM -1; i++){
+            System.out.print(lookSN[i] + ", ");
+        }
+        System.out.println(lookSN[DIM - 1] +"]");
+
+        System.out.print("W: [");
+        for(int i = 0; i < DIM -1; i++){
+            System.out.print(lookWE[i] + ", ");
+        }
+        System.out.println(lookEW[DIM - 1] +"]\n");
+
+        for(int r = 0; r < DIM; r++){
+            for(int c = 0; c < DIM; c++){
+                System.out.print(" . ");
+            }
+            System.out.println("");
+        }
 
         return "SkyscraperConfig::toString() not implemented";  // remove
     }
