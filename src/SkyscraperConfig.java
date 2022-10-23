@@ -139,36 +139,57 @@ public class SkyscraperConfig implements Configuration {
     public String toString() {
 
         // TODO
-        System.out.print("N: [");
-        for(int i = 0; i < DIM -1; i++){
-            System.out.print(lookNS[i] + ", ");
+        String stringNS = "N: [";
+        String concatNS = "";
+        String stringEW = "E: [";
+        String concatEW = "";
+        String stringSN = "S: [";
+        String concatSN = "";
+        String stringWE = "W: [";
+        String concatWE = "";
+        for(int i = 0; i < DIM - 1; i++){
+            concatNS = concatNS + lookNS[i] + ", ";
+            concatEW = concatEW + lookEW[i] + ", ";
+            concatSN = concatSN + lookSN[i] + ", ";
+            concatWE = concatWE + lookWE[i] + ", ";
         }
-        System.out.println(lookNS[DIM - 1] +"]");
+        System.out.println(stringNS + concatNS +lookNS[DIM - 1] +"]");
+        System.out.println(stringEW + concatEW +lookEW[DIM - 1] +"]");
+        System.out.println(stringSN + concatSN +lookSN[DIM - 1] +"]");
+        System.out.println(stringWE + concatWE +lookWE[DIM - 1] +"]");
 
-        System.out.print("E: [");
-        for(int i = 0; i < DIM -1; i++){
-            System.out.print(lookEW[i] + ", ");
+        // prints top header of config
+        System.out.print(" ");
+        for(int header = 0; header < DIM; header++){
+            System.out.print(" " + lookNS[header]);
         }
-        System.out.println(lookEW[DIM - 1] +"]");
+        System.out.println("");
 
-        System.out.print("S: [");
-        for(int i = 0; i < DIM -1; i++){
-            System.out.print(lookSN[i] + ", ");
+        System.out.print("  ");
+        for(int header_dash = 0; header_dash < DIM; header_dash++){
+            System.out.print("--");
         }
-        System.out.println(lookSN[DIM - 1] +"]");
-
-        System.out.print("W: [");
-        for(int i = 0; i < DIM -1; i++){
-            System.out.print(lookWE[i] + ", ");
-        }
-        System.out.println(lookEW[DIM - 1] +"]\n");
+        System.out.println("");
 
         for(int r = 0; r < DIM; r++){
+            System.out.print(lookWE[r] + "|");
             for(int c = 0; c < DIM; c++){
-                System.out.print(" . ");
+                System.out.print(EMPTY_CELL + " ");
             }
-            System.out.println("");
+            System.out.println("|" + lookEW[r]);
         }
+
+        System.out.print("  ");
+        for(int header_dash = 0; header_dash < DIM; header_dash++){
+            System.out.print("--");
+        }
+        System.out.println();
+
+        System.out.print(" ");
+        for(int header = 0; header < DIM; header++){
+            System.out.print(" " + lookSN[header]);
+        }
+        System.out.println("");
 
         return "SkyscraperConfig::toString() not implemented";  // remove
     }
