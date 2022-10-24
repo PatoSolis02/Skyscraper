@@ -149,6 +149,26 @@ public class SkyscraperConfig implements Configuration {
             }
         }
 
+        if(col == DIM - 1){
+            int countEW = 1;
+            int countWE = 1;
+            int idxOfMax =
+            for(int c = 1; c < DIM; c++){
+                if(grid[row][c] > grid[row][0]){
+                    countWE++;
+                    System.out.println("WE: " + countWE);
+                }
+            }
+            for(int c = 0; c < DIM - 1; c++ ){
+                if(grid[row][c] > grid[row][DIM - 1]){
+                    countEW++;
+                    System.out.println(countEW);
+                }
+            }
+            if(countWE != lookWE[row] || countEW != lookEW[row]){
+                flag = false;
+            }
+        }
         return flag;  // remove after implementing
     }
 
