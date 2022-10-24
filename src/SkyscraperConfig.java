@@ -105,8 +105,32 @@ public class SkyscraperConfig implements Configuration {
     public boolean isGoal() {
 
         // TODO
+        boolean flag = true;
+        int countNS = 0;
+        int countSN = 0;
+        int maxSeen = 0;
+        for(int c = 0; c < DIM; c ++){
+            for(int r = 0; r < DIM; r++){
+                if(grid[r][c] > maxSeen){
+                    maxSeen = grid[r][c];
+                    countNS++;
+                    System.out.println(countNS);
+                }
+            }
+            maxSeen = 0;
+            for(int r = DIM - 1; r >= 0; r--){
+                if(grid[r][c] > maxSeen){
+                    maxSeen = grid[r][c];
+                    countSN++;
+                    System.out.println(countSN);
+                }
+            }
+            if(countNS != lookNS[c] || countSN != lookSN[c]){
+                flag = false;
+            }
+        }
 
-        return false; // remove after implementing
+        return flag; // remove after implementing
     }
 
     /**
@@ -150,17 +174,20 @@ public class SkyscraperConfig implements Configuration {
         }
 
         if(col == DIM - 1){
-            int countEW = 1;
-            int countWE = 1;
-            int idxOfMax =
-            for(int c = 1; c < DIM; c++){
-                if(grid[row][c] > grid[row][0]){
+            int countEW = 0;
+            int countWE = 0;
+            int maxSeen = 0;
+            for(int c = 0; c < DIM; c++){
+                if(grid[row][c] > maxSeen){
+                    maxSeen = grid[row][c];
                     countWE++;
-                    System.out.println("WE: " + countWE);
+                    System.out.println(countWE);
                 }
             }
-            for(int c = 0; c < DIM - 1; c++ ){
-                if(grid[row][c] > grid[row][DIM - 1]){
+            maxSeen = 0;
+            for(int c = DIM - 1; c >= 0; c--){
+                if(grid[row][c] > maxSeen){
+                    maxSeen = grid[row][c];
                     countEW++;
                     System.out.println(countEW);
                 }
