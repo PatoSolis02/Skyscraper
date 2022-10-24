@@ -158,6 +158,9 @@ public class SkyscraperConfig implements Configuration {
                 if(grid[row][c] > maxSeen){
                     maxSeen = grid[row][c];
                     countWE++;
+                    if(countWE > lookWE[row]){
+                        return false;
+                    }
                 }
             }
             maxSeen = 0;
@@ -165,6 +168,9 @@ public class SkyscraperConfig implements Configuration {
                 if(grid[row][c] > maxSeen){
                     maxSeen = grid[row][c];
                     countEW++;
+                    if(countEW > lookEW[row]){
+                        return false;
+                    }
                 }
             }
             if(countWE != lookWE[row] || countEW != lookEW[row]){
@@ -174,16 +180,22 @@ public class SkyscraperConfig implements Configuration {
         if(row == DIM - 1){
             maxSeen = 0;
             for(int r = 0; r < DIM; r++){
-                if(grid[r][col] > maxSeen){
+                if(grid[r][col] > maxSeen) {
                     maxSeen = grid[r][col];
                     countNS++;
+                    if(countNS > lookNS[col]){
+                        return false;
                     }
                 }
+            }
             maxSeen = 0;
             for(int r = DIM - 1; r >= 0; r--){
                 if(grid[r][col] > maxSeen){
                     maxSeen = grid[r][col];
                     countSN++;
+                    if(countSN > lookSN[col]){
+                        return false;
+                    }
                 }
             }
             if(countNS != lookNS[col] || countSN != lookSN[col]){
