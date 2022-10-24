@@ -132,7 +132,7 @@ public class SkyscraperConfig implements Configuration {
     /**
      * getSuccessors
      *
-     * @returns Collection of Configurations
+     * @return Collection of Configurations
      */
     @Override
     public Collection<Configuration> getSuccessors() {
@@ -149,7 +149,7 @@ public class SkyscraperConfig implements Configuration {
     /**
      * isValid() - checks if current config is valid
      *
-     * @returns true if config is valid, false otherwise
+     * @return true if config is valid, false otherwise
      */
     @Override
     public boolean isValid() {
@@ -231,8 +231,7 @@ public class SkyscraperConfig implements Configuration {
      * toString() method
      *
      * @return String representing configuration board & grid w/ look values.
-     * The format of the output for the problem solving initial config is:
-     *
+     * The format of the output for the problem-solving initial config is:
      *   1 2 4 2
      *   --------
      * 1|. . . .|3
@@ -249,13 +248,13 @@ public class SkyscraperConfig implements Configuration {
         for(int header = 0; header < DIM; header++){
             System.out.print(" " + lookNS[header]);
         }
-        System.out.println("");
+        System.out.println();
 
         System.out.print("  ");
         for(int header_dash = 0; header_dash < DIM; header_dash++){
             System.out.print("--");
         }
-        System.out.println("");
+        System.out.println();
 
         for(int r = 0; r < DIM; r++){
             System.out.print(lookWE[r] + "|");
@@ -279,7 +278,7 @@ public class SkyscraperConfig implements Configuration {
         for(int header = 0; header < DIM; header++){
             System.out.print(" " + lookSN[header]);
         }
-        System.out.println("");
+        System.out.println();
 
         return "";  // remove
     }
