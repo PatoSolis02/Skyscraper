@@ -15,14 +15,30 @@ public class SkyscraperConfig implements Configuration {
     /** empty cell value display */
     public final static char EMPTY_CELL = '.';
 
+    /** dimension of board */
     private static int DIM;
+
+    /** desired value of number of towers seen from NS for each column */
     private static int[] lookNS;
+
+    /** desired value of number of towers seen from EW for each row */
     private static int[] lookEW;
+
+    /** desired value of number of towers seen from SN for each column */
     private static int[] lookSN;
+
+    /** desired value of number of towers seen from WE for each row */
     private static int[] lookWE;
+
+    /** grid to be populated */
     private int[][]grid;
+
+    /** current column */
     private int col = -1;
+
+    /** current row */
     private int row = 0;
+
     /**
      * Constructor
      *
@@ -101,6 +117,11 @@ public class SkyscraperConfig implements Configuration {
         this.grid[row][col] = num;
     }
 
+    /**
+     * checks if board is a solution.
+     *
+     * @return true if board is filled, false otherwise
+     */
     @Override
     public boolean isGoal() {
 
@@ -122,7 +143,7 @@ public class SkyscraperConfig implements Configuration {
             successors.add(new SkyscraperConfig(this, i));
         }
 
-        return successors;   // remove after implementing
+        return successors;
     }
 
     /**
@@ -135,11 +156,13 @@ public class SkyscraperConfig implements Configuration {
 
         // TODO
         boolean flag = true;
-        int countEW = 0;
-        int countWE = 0;
-        int countNS = 0;
-        int countSN = 0;
-        int maxSeen = 0;
+        int countEW = 0; // num of towers visible looking EW
+        int countWE = 0; // num of towers visible looking WE
+        int countNS = 0; // num of towers visible looking NS
+        int countSN = 0; // num of towers visible looking SN
+        int maxSeen = 0; // value of the biggest tower seen
+
+        // checks for duplicates
         for(int c = 0; c < DIM; c++){
             if(grid[row][col] == grid[row][c] && col != c){
                 flag = false;
@@ -153,18 +176,20 @@ public class SkyscraperConfig implements Configuration {
             }
         }
 
-        if(col == DIM - 1){
-            for(int c = 0; c < DIM; c++){
-                if(grid[row][c] > maxSeen){
-                    maxSeen = grid[row][c];
-                    countWE++;
-                    if(countWE > lookWE[row]){
-                        return false;
-                    }
+        // checks if configuration is a possible solution for the row each time a cell is populated (WE direction)
+        for(int c = 0; c <= col; c++){
+            if(grid[row][c] > maxSeen){
+                maxSeen = grid[row][c];
+                countWE++;
+                if(countWE > lookWE[row]){
+                    return false;
                 }
             }
-            maxSeen = 0;
-            for(int c = DIM - 1; c >= 0; c--){
+        }
+        // checks if configuration is a possible solution when row is filled (EW direction)
+        maxSeen = 0;
+        if(col == DIM -1){
+            for(int c = col; c >= 0; c--){
                 if(grid[row][c] > maxSeen){
                     maxSeen = grid[row][c];
                     countEW++;
@@ -173,21 +198,21 @@ public class SkyscraperConfig implements Configuration {
                     }
                 }
             }
-            if(countWE != lookWE[row] || countEW != lookEW[row]){
-                flag = false;
-            }
         }
-        if(row == DIM - 1){
-            maxSeen = 0;
-            for(int r = 0; r < DIM; r++){
-                if(grid[r][col] > maxSeen) {
-                    maxSeen = grid[r][col];
-                    countNS++;
-                    if(countNS > lookNS[col]){
-                        return false;
-                    }
+
+        // checks if configuration is a possible solution for the row each time a cell is populated (NS direction)
+        maxSeen = 0;
+        for(int r = 0; r < row; r++){
+            if(grid[r][col] > maxSeen){
+                maxSeen = grid[r][col];
+                countNS++;
+                if(countNS > lookNS[col]){
+                    return false;
                 }
             }
+        }
+        // checks if configuration is a possible solution for the row each time a cell is populated (SN direction)
+        if(row == DIM - 1){
             maxSeen = 0;
             for(int r = DIM - 1; r >= 0; r--){
                 if(grid[r][col] > maxSeen){
@@ -198,11 +223,8 @@ public class SkyscraperConfig implements Configuration {
                     }
                 }
             }
-            if(countNS != lookNS[col] || countSN != lookSN[col]){
-                flag = false;
-            }
         }
-        return flag;  // remove after implementing
+        return flag;
     }
 
     /**
