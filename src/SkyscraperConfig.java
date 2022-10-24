@@ -21,6 +21,8 @@ public class SkyscraperConfig implements Configuration {
     private static int[] lookSN;
     private static int[] lookWE;
     private int[][]grid;
+    private int col = -1;
+    private int row = 0;
     /**
      * Constructor
      *
@@ -80,10 +82,23 @@ public class SkyscraperConfig implements Configuration {
      *
      * @param copy SkyscraperConfig instance
      */
-    public SkyscraperConfig(SkyscraperConfig copy) {
+    public SkyscraperConfig(SkyscraperConfig copy, int num) {
 
         // TODO
+        this.row = copy.row;
+        this.col = copy.col;
+        this.grid = new int[DIM][DIM];
 
+        this.col += 1;
+        if(this.col == DIM) {
+            this.col = 0;
+            this.row++;
+        }
+
+        for(int r = 0; r < DIM; r++){
+            System.arraycopy(copy.grid[r], 0, this.grid[r], 0, DIM);
+        }
+        this.grid[row][col] = num;
     }
 
     @Override
@@ -103,8 +118,12 @@ public class SkyscraperConfig implements Configuration {
     public Collection<Configuration> getSuccessors() {
 
         // TODO
+        List<Configuration> successors = new LinkedList<>();
+        for(int i = 1; i <= DIM; i++){
+            successors.add(new SkyscraperConfig(this, i));
+        }
 
-        return new ArrayList<>();   // remove after implementing
+        return successors;   // remove after implementing
     }
 
     /**
@@ -116,8 +135,21 @@ public class SkyscraperConfig implements Configuration {
     public boolean isValid() {
 
         // TODO
+        boolean flag = true;
+        for(int c = 0; c < DIM; c++){
+            if(grid[row][col] == grid[row][c] && col != c){
+                flag = false;
+                break;
+            }
+        }
+        for(int r = 0; r < DIM; r++ ){
+            if(grid[row][col] == grid[r][col] && row != r){
+                flag = false;
+                break;
+            }
+        }
 
-        return false;  // remove after implementing
+        return flag;  // remove after implementing
     }
 
     /**
@@ -137,27 +169,6 @@ public class SkyscraperConfig implements Configuration {
      */
     @Override
     public String toString() {
-
-        // TODO
-        String stringNS = "N: [";
-        String concatNS = "";
-        String stringEW = "E: [";
-        String concatEW = "";
-        String stringSN = "S: [";
-        String concatSN = "";
-        String stringWE = "W: [";
-        String concatWE = "";
-        for(int i = 0; i < DIM - 1; i++){
-            concatNS = concatNS + lookNS[i] + ", ";
-            concatEW = concatEW + lookEW[i] + ", ";
-            concatSN = concatSN + lookSN[i] + ", ";
-            concatWE = concatWE + lookWE[i] + ", ";
-        }
-        System.out.println(stringNS + concatNS +lookNS[DIM - 1] +"]");
-        System.out.println(stringEW + concatEW +lookEW[DIM - 1] +"]");
-        System.out.println(stringSN + concatSN +lookSN[DIM - 1] +"]");
-        System.out.println(stringWE + concatWE +lookWE[DIM - 1] +"]");
-
         // prints top header of config
         System.out.print(" ");
         for(int header = 0; header < DIM; header++){
@@ -174,7 +185,11 @@ public class SkyscraperConfig implements Configuration {
         for(int r = 0; r < DIM; r++){
             System.out.print(lookWE[r] + "|");
             for(int c = 0; c < DIM; c++){
-                System.out.print(EMPTY_CELL + " ");
+                if(this.grid[r][c] == 0){
+                    System.out.print(EMPTY_CELL + " ");
+                }else{
+                    System.out.print(grid[r][c] + " ");
+                }
             }
             System.out.println("|" + lookEW[r]);
         }
@@ -191,6 +206,6 @@ public class SkyscraperConfig implements Configuration {
         }
         System.out.println("");
 
-        return "SkyscraperConfig::toString() not implemented";  // remove
+        return "";  // remove
     }
 }
