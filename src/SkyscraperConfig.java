@@ -105,32 +105,7 @@ public class SkyscraperConfig implements Configuration {
     public boolean isGoal() {
 
         // TODO
-        boolean flag = true;
-        int countNS = 0;
-        int countSN = 0;
-        int maxSeen = 0;
-        for(int c = 0; c < DIM; c ++){
-            for(int r = 0; r < DIM; r++){
-                if(grid[r][c] > maxSeen){
-                    maxSeen = grid[r][c];
-                    countNS++;
-                    System.out.println(countNS);
-                }
-            }
-            maxSeen = 0;
-            for(int r = DIM - 1; r >= 0; r--){
-                if(grid[r][c] > maxSeen){
-                    maxSeen = grid[r][c];
-                    countSN++;
-                    System.out.println(countSN);
-                }
-            }
-            if(countNS != lookNS[c] || countSN != lookSN[c]){
-                flag = false;
-            }
-        }
-
-        return flag; // remove after implementing
+        return col == DIM-1 && row == DIM-1;
     }
 
     /**
@@ -160,6 +135,11 @@ public class SkyscraperConfig implements Configuration {
 
         // TODO
         boolean flag = true;
+        int countEW = 0;
+        int countWE = 0;
+        int countNS = 0;
+        int countSN = 0;
+        int maxSeen = 0;
         for(int c = 0; c < DIM; c++){
             if(grid[row][col] == grid[row][c] && col != c){
                 flag = false;
@@ -174,14 +154,10 @@ public class SkyscraperConfig implements Configuration {
         }
 
         if(col == DIM - 1){
-            int countEW = 0;
-            int countWE = 0;
-            int maxSeen = 0;
             for(int c = 0; c < DIM; c++){
                 if(grid[row][c] > maxSeen){
                     maxSeen = grid[row][c];
                     countWE++;
-                    System.out.println(countWE);
                 }
             }
             maxSeen = 0;
@@ -189,10 +165,28 @@ public class SkyscraperConfig implements Configuration {
                 if(grid[row][c] > maxSeen){
                     maxSeen = grid[row][c];
                     countEW++;
-                    System.out.println(countEW);
                 }
             }
             if(countWE != lookWE[row] || countEW != lookEW[row]){
+                flag = false;
+            }
+        }
+        if(row == DIM - 1){
+            maxSeen = 0;
+            for(int r = 0; r < DIM; r++){
+                if(grid[r][col] > maxSeen){
+                    maxSeen = grid[r][col];
+                    countNS++;
+                    }
+                }
+            maxSeen = 0;
+            for(int r = DIM - 1; r >= 0; r--){
+                if(grid[r][col] > maxSeen){
+                    maxSeen = grid[r][col];
+                    countSN++;
+                }
+            }
+            if(countNS != lookNS[col] || countSN != lookSN[col]){
                 flag = false;
             }
         }
